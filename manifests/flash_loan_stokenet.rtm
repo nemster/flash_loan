@@ -1,0 +1,28 @@
+CALL_METHOD
+	Address("component_tdx_2_1cqcvm82nh59pdqydv4n2uxp69r8wal8c5nxn67pzu6xqst7ls5485z")
+	"get_loan"
+	Decimal("50")
+;
+
+# Do something with the funds...
+
+CALL_METHOD
+        Address("account_tdx_2_12y8r2eyxz8uvr8vvk6g0k7yss0c53dlr6c245tdxmlz28jw04gt4kv")
+        "withdraw"
+        Address("resource_tdx_2_1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxtfd2jc")
+        Decimal("1")
+;
+TAKE_ALL_FROM_WORKTOP
+        Address("resource_tdx_2_1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxtfd2jc")
+        Bucket("xrd_bucket")
+;
+TAKE_ALL_FROM_WORKTOP
+        Address("resource_tdx_2_1nfe24ycu5nm9t9u0ysgy8wtshnflzppzkpn2ct4jjluwy6y6v48hha")
+        Bucket("transient_nft_bucket")
+;
+CALL_METHOD
+	Address("component_tdx_2_1cqcvm82nh59pdqydv4n2uxp69r8wal8c5nxn67pzu6xqst7ls5485z")
+	"return_loan"
+        Bucket("xrd_bucket")
+        Bucket("transient_nft_bucket")
+;

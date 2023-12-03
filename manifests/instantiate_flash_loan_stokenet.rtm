@@ -1,0 +1,9 @@
+CALL_FUNCTION
+    Address("package_tdx_2_1p4rs20l2pwe43vqpw7x26h96s7v8w58ul0eyfezrq429nl8kx86pxe")
+    "FlashLoan"
+    "instantiate_flash_loan"
+    Address("resource_tdx_2_1tkv4yyzqekpt64x4vex9fw64u8fh5kk9alx905927jphp49anfekpw")
+    Address("resource_tdx_2_1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxtfd2jc")
+    Decimal("1")
+    Decimal("0.9")
+;
