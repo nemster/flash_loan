@@ -1,0 +1,17 @@
+CALL_METHOD
+	Address("account_sim1c956qr3kxlgypxwst89j9yf24tjc7zxd4up38x37zr6q4jxdx9rhma")
+	"lock_fee"
+	Decimal("5")
+;
+CALL_METHOD
+	Address("account_sim1c956qr3kxlgypxwst89j9yf24tjc7zxd4up38x37zr6q4jxdx9rhma")
+	"create_proof_of_non_fungibles"
+	Address("resource_sim1nfzf2h73frult99zd060vfcml5kncq3mxpthusm9lkglvhsr0guahy")
+	Array<NonFungibleLocalId>(
+    NonFungibleLocalId("#1#")
+  )
+;
+CALL_METHOD
+	Address("component_sim1cpwu4wc6rg0am8l9prnh2lzqkk6hue6stzqhdx48rzvek2mmm5vp0p")
+	"distribute_rewards"
+;

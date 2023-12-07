@@ -1,0 +1,33 @@
+CALL_METHOD
+        Address("account_sim1c956qr3kxlgypxwst89j9yf24tjc7zxd4up38x37zr6q4jxdx9rhma")
+        "lock_fee"
+        Decimal("5")
+; 
+CALL_METHOD
+        Address("component_sim1cpwu4wc6rg0am8l9prnh2lzqkk6hue6stzqhdx48rzvek2mmm5vp0p")
+        "get_loan"
+        Decimal("50")
+;
+
+# Do something with the funds...
+
+CALL_METHOD
+        Address("account_sim1c956qr3kxlgypxwst89j9yf24tjc7zxd4up38x37zr6q4jxdx9rhma")
+        "withdraw"
+        Address("resource_sim1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxakj8n3")
+        Decimal("1")
+;
+TAKE_ALL_FROM_WORKTOP
+        Address("resource_sim1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxakj8n3")
+        Bucket("xrd_bucket")
+;
+TAKE_ALL_FROM_WORKTOP
+        Address("resource_sim1nt6n55rdkdxft6lsw8mv8f4rc4272vga3dt9knwshlkyw4mca3ndd4")
+        Bucket("transient_nft_bucket")
+;
+CALL_METHOD
+	Address("component_sim1cpwu4wc6rg0am8l9prnh2lzqkk6hue6stzqhdx48rzvek2mmm5vp0p")
+	"return_loan"
+        Bucket("xrd_bucket")
+        Bucket("transient_nft_bucket")
+;

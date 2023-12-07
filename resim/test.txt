@@ -1,0 +1,17 @@
+resim reset
+
+resim new-account
+
+resim publish .
+
+resim call-function package_sim1pk3cmat8st4ja2ms8mjqy2e9ptk8y6cx40v4qnfrkgnxcp2krkpr92 FlashLoan instantiate_flash_loan resource_sim1nfzf2h73frult99zd060vfcml5kncq3mxpthusm9lkglvhsr0guahy resource_sim1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxakj8n3 1 0.9
+
+resim call-method component_sim1cpwu4wc6rg0am8l9prnh2lzqkk6hue6stzqhdx48rzvek2mmm5vp0p add_funds resource_sim1tknxxxxxxxxxradxrdxxxxxxxxx009923554798xxxxxxxxxakj8n3:100
+
+resim run flash_loan_resim.rtm
+
+resim run distribute_rewards_resim.rtm
+
+resim run withdraw_owner_rewards_resim.rtm
+
+resim call-method component_sim1cpwu4wc6rg0am8l9prnh2lzqkk6hue6stzqhdx48rzvek2mmm5vp0p withdraw_funds 'resource_sim1nt0fzfanrvjucld6yr798c52zxcpmcvz9aqmm75t2r9kzzwy4wyqpe:#1#'
