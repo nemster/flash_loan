@@ -18,7 +18,7 @@ CALL_METHOD
     Address("${component}")
     "partial_withdraw"
     Bucket("bucket1")
-    Decimal("50")
+    Decimal("35")
 ;
 CALL_METHOD
     Address("${account}")

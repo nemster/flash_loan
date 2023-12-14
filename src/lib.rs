@@ -178,23 +178,33 @@ mod flash_loan {
 
         pub fn partial_withdraw(&mut self, lender_nft: Bucket, percentage_withdrawed: Decimal) -> (Bucket, Bucket) {
             assert!(lender_nft.resource_address() == self.lender_resource_manager.address(),"Unknown badge"); 
+            let percentage = percentage_withdrawed / 100;
+            info!("% Requested back {:?}/100 ", percentage_withdrawed);  
+            Self::amount_checks(percentage_withdrawed);
 
             let mut amount = Decimal(I192::from(0));
             for nft in lender_nft.as_non_fungible().non_fungibles::<LenderData>() {
-                let to_be_returned_amount = nft.data().current_amount * percentage_withdrawed / 100;
-                info!("Calculating amount to be returned  {:?} ", to_be_returned_amount);  
+                let to_be_returned_amount = nft.data().current_amount * percentage;
+                info!("Calculating amount to be returned {:?} of the total {:?} ", to_be_returned_amount, nft.data().current_amount);  
                 amount += to_be_returned_amount;
                 info!("Updated amount to be returned  {:?} ", amount);  
+                self.lender_resource_manager.update_non_fungible_data(&nft.local_id(), "current_amount", nft.data().current_amount - to_be_returned_amount );
             }
             self.total_deposited -= amount;
             info!("Returned amount {:?} ", amount);  
 
-            for nft in lender_nft.as_non_fungible().non_fungibles::<LenderData>() {
-                let to_be_returned_amount = nft.data().current_amount * percentage_withdrawed / 100;
-                self.lender_resource_manager.update_non_fungible_data(&nft.local_id(), "current_amount", to_be_returned_amount );
-            }
-
             return (self.coins_to_lend.take(amount), lender_nft);
+        }
+
+        fn amount_checks(percentage_withdrawed: Decimal){
+            assert!(
+                percentage_withdrawed <= dec!(75),
+                "No partial withdraw above 75%!"
+            );
+            assert!(
+                percentage_withdrawed >= dec!(25),
+                "No partial withdraw below 25%!"
+            ); 
         }
 
         pub fn get_loan(&mut self, amount: Decimal) -> (Bucket, Bucket) {
