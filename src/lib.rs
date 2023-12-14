@@ -26,6 +26,7 @@ mod flash_loan {
         methods {
             add_funds => PUBLIC;
             withdraw_funds => PUBLIC;
+            partial_withdraw => PUBLIC;
             get_loan => PUBLIC;
             return_loan => PUBLIC;
             set_borrower_fee => restrict_to: [admin];
@@ -173,6 +174,27 @@ mod flash_loan {
             lender_nft.burn();
 
             return self.coins_to_lend.take(amount);
+        }
+
+        pub fn partial_withdraw(&mut self, lender_nft: Bucket, percentage_withdrawed: Decimal) -> (Bucket, Bucket) {
+            assert!(lender_nft.resource_address() == self.lender_resource_manager.address(),"Unknown badge"); 
+
+            let mut amount = Decimal(I192::from(0));
+            for nft in lender_nft.as_non_fungible().non_fungibles::<LenderData>() {
+                let to_be_returned_amount = nft.data().current_amount * percentage_withdrawed / 100;
+                info!("Calculating amount to be returned  {:?} ", to_be_returned_amount);  
+                amount += to_be_returned_amount;
+                info!("Updated amount to be returned  {:?} ", amount);  
+            }
+            self.total_deposited -= amount;
+            info!("Returned amount {:?} ", amount);  
+
+            for nft in lender_nft.as_non_fungible().non_fungibles::<LenderData>() {
+                let to_be_returned_amount = nft.data().current_amount * percentage_withdrawed / 100;
+                self.lender_resource_manager.update_non_fungible_data(&nft.local_id(), "current_amount", to_be_returned_amount );
+            }
+
+            return (self.coins_to_lend.take(amount), lender_nft);
         }
 
         pub fn get_loan(&mut self, amount: Decimal) -> (Bucket, Bucket) {
